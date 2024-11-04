@@ -1,6 +1,6 @@
 import re
 import sqlparse
-from sqlparse.sql import IdentifierList, Identifier, Function
+from sqlparse.sql import IdentifierList, Identifier, Function, Where
 from sqlparse.tokens import Keyword, DML, Punctuation
 
 cleanup_regex = {
@@ -113,6 +113,13 @@ def extract_from_part(parsed, stop_at_punctuation=True):
                         identifier.value.upper() == 'FROM'):
                     tbl_prefix_seen = True
                     break
+        elif isinstance(item, Where) and hasattr(item, 'tokens') and any(
+                dml_token.normalized == 'SELECT' for dml_token in item.tokens if dml_token.ttype is Keyword.DML
+        ):
+            for subquery_token in extract_from_part(item, stop_at_punctuation):
+                yield subquery_token
+
+
 
 def extract_table_identifiers(token_stream):
     """yields tuples of (schema_name, table_name, table_alias)"""

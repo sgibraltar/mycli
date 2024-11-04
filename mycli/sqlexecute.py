@@ -112,6 +112,7 @@ class SQLExecute(object):
         self.ssl = ssl
         self.server_info = None
         self.connection_id = None
+        self.aurora_server_id = None
         self.ssh_user = ssh_user
         self.ssh_host = ssh_host
         self.ssh_port = ssh_port
@@ -219,6 +220,8 @@ class SQLExecute(object):
         self.init_command = init_command
         # retrieve connection id
         self.reset_connection_id()
+        # retrieve aurora server id
+        self.get_aurora_server_id()
         self.server_info = ServerInfo.from_version_string(conn.server_version)
 
     def run(self, statement):
@@ -354,6 +357,18 @@ class SQLExecute(object):
             _logger.error('Failed to get connection id: %s', e)
         else:
             _logger.debug('Current connection id: %s', self.connection_id)
+
+    def get_aurora_server_id(self):
+        _logger.debug('Get aurora server id')
+        try:
+            res = self.run('select @@aurora_server_id;')
+            for title, cur, headers, status in res:
+                self.aurora_server_id = cur.fetchone()[0]
+        except Exception as e:
+            self.aurora_server_id = self.host
+            _logger.error('Failed to get aurora server id: %s', e)
+        else:
+            _logger.debug('Current aurora server id: %s', self.aurora_server_id)
 
     def change_db(self, db):
         self.conn.select_db(db)

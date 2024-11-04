@@ -21,7 +21,8 @@ log_file = ~/.mycli.log
 
 # Default log level. Possible values: "CRITICAL", "ERROR", "WARNING", "INFO"
 # and "DEBUG". "NONE" disables logging.
-log_level = INFO
+# log_level = INFO
+log_level = CRITICAL
 
 # Log every query and its results to a file. Enable this by uncommenting the
 # line below.
@@ -45,12 +46,12 @@ table_format = ascii
 # fruity.
 # Screenshots at http://mycli.net/syntax
 # Can be further modified in [colors]
-syntax_style = default
+syntax_style = vim
 
 # Keybindings: Possible values: emacs, vi.
 # Emacs mode: Ctrl-A is home, Ctrl-E is end. All emacs keybindings are available in the REPL.
 # When Vi mode is enabled you can use modal editing features offered by Vi in the REPL.
-key_bindings = emacs
+key_bindings = vi
 
 # Enabling this option will show the suggestions in a wider menu. Thus more items are suggested.
 wider_completion_menu = False
@@ -70,11 +71,11 @@ wider_completion_menu = False
 # \A - DSN alias name (from the [alias_dsn] section)
 # \u - Username
 # \x1b[...m - insert ANSI escape sequence
-prompt = '\t \u@\h:\d> '
+prompt = '\h:\p \d> '
 prompt_continuation = '->'
 
 # Skip intro info on startup and outro info on exit
-less_chatty = False
+less_chatty = True
 
 # Use alias from --login-path instead of host name in prompt
 login_path_as_host = False
@@ -127,7 +128,7 @@ output.null = "#808080"
 # sql.comment.single-line = ''
 # sql.comment.optimizer-hint = ''
 # sql.escape = 'border:#FF0000'
-# sql.keyword = 'bold #008000'
+sql.keyword = 'bold #da81e6'
 # sql.datatype = 'nobold #B00040'
 # sql.literal = ''
 # sql.literal.date = ''
@@ -144,7 +145,8 @@ output.null = "#808080"
 # sql.number.integer = ''
 # sql.operator = '#666666'
 # sql.punctuation = ''
-# sql.string = '#BA2121'
+# sql.string = '#edea98'
+sql.string = '#ceff3b'
 # sql.string.double-quouted = ''
 # sql.string.escape = 'bold #BB6622'
 # sql.string.single-quoted = ''
